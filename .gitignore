@@ -62,3 +62,6 @@ config.local.*
 .ipynb_checkpoints/
 
 # Note: uv.lock and .python-version are intentionally tracked for CI/CD reproducibility
+
+# Draw
+excalidraw/
