@@ -1,0 +1,33 @@
+name: CI Pipeline ML Ops
+
+on:
+  pull_request:
+    branches:
+      - staging
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.8'
+        
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          uv --version
+
+      - name: Install dependencies
+        working-directory: python/credit_scoring
+        run: |
+          uv sync
+          uv pip install -r pyproject.toml
+      
+      - name: Run tests
+        working-directory: python/credit_scoring
+        run: pytest test/
